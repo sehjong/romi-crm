@@ -2,7 +2,7 @@ const cloudinary = require("../middleware/cloudinary");
 const Post = require("../models/Post");
 
 module.exports = {
-  getProfile: async (req, res) => { 
+  getDashboard: async (req, res) => { 
     console.log(req.user)
     try {
       //Since we have a session each request (req) contains the logged-in users info: req.user
@@ -10,7 +10,25 @@ module.exports = {
       //Grabbing just the posts of the logged-in user
       const posts = await Post.find({ user: req.user.id });
       //Sending post data from mongodb and user data to ejs template
-      res.render("profile.ejs", { posts: posts, user: req.user });
+      res.render("dashboard.ejs", { posts: posts, user: req.user });
+    } catch (err) {
+      console.log(err);
+    }
+  },
+  // getDashboard: async (req, res) => {
+  //   try {
+  //     // Fetch all posts
+  //     const posts = await Post.find();
+  //     res.render("dashboard.ejs", { posts, user: req.user });
+  //   } catch (err) {
+  //     console.log(err);
+  //     res.status(500).render('error.ejs');
+  //   }
+  // },
+  getFeed: async (req, res) => {
+    try {
+      const posts = await Post.find().sort({ createdAt: "desc" }).lean();
+      res.render("feed.ejs", { posts: posts });
     } catch (err) {
       console.log(err);
     }
@@ -42,7 +60,7 @@ module.exports = {
         user: req.user.id,
       });
       console.log("Post has been added!");
-      res.redirect("/profile");
+      res.redirect("/dashboard");
     } catch (err) {
       console.log(err);
     }
@@ -70,9 +88,9 @@ module.exports = {
       // Delete post from db
       await Post.remove({ _id: req.params.id });
       console.log("Deleted Post");
-      res.redirect("/profile");
+      res.redirect("/dashboard");
     } catch (err) {
-      res.redirect("/profile");
+      res.redirect("/dashboard");
     }
   },
 };

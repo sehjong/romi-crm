@@ -2,10 +2,20 @@ const authUtils = require("../utils/authUtils");
 const mongoose = require("mongoose");
 
 const AdminSchema = new mongoose.Schema({
-  username: { type: String, unique: true, required: true },
-  email: { type: String, unique: true, required: true },
-  password: { type: String, required: true },
-  // Other fields specific to admin users.
+  username: { 
+    type: String, 
+    unique: true, 
+    required: true
+  },
+  email: { 
+    type: String, 
+    unique: true, 
+    required: true
+  },
+  password: { 
+    type: String, 
+    required: true 
+  }
 });
 
 AdminSchema.pre("save", function (next) {
