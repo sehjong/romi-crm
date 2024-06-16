@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clients</title>
+    <link rel="stylesheet" href="/styles/main.css">
+</head>
+<body>
+    <h1>Client List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>Address</th>
+                <th>Registration Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% clients.forEach(client => { %>
+                <tr>
+                    <td><%= client.fullName %></td>
+                    <td><%= client.contactEmail %></td>
+                    <td><%= client.contactNumber %></td>
+                    <td><%= client.physicalAddress %></td>
+                    <td><%= client.registrationDate.toDateString() %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <a href="/create/client">Add New Client</a>
+</body>
+</html>
