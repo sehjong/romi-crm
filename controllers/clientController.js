@@ -13,7 +13,8 @@ module.exports = {
             res.redirect('/clients');
         } catch (err) {
             console.error('Error creating client:', err);
-            res.redirect('/create/client');
+            req.flash('error', "Failed to create client. Please try again.");
+            res.redirect('/clients/new');
         }
     },
     getClients: async (req, res) => {
@@ -22,6 +23,7 @@ module.exports = {
             res.render('clients/index', { clients });
         } catch (err) {
             console.error('Error fetching clients:', err);
+            req.flash('error', "Could not load clients.");
             res.redirect('/');
         }
     }
