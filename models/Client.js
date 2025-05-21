@@ -17,7 +17,7 @@ const ClientSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    registrationDate: {
+    createdAt: {
         type: Date,
         default: Date.now
     }
