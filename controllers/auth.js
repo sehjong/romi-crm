@@ -78,7 +78,7 @@ exports.postSignup = (req, res, next) => {
 
   if (validationErrors.length) {
     req.flash("errors", validationErrors);
-    return res.redirect("../signup");
+    return res.redirect("/signup");
   }
   req.body.email = validator.normalizeEmail(req.body.email, {
     gmail_remove_dots: false,
@@ -100,7 +100,7 @@ exports.postSignup = (req, res, next) => {
         req.flash("errors", {
           msg: "Account with that email address or username already exists.",
         });
-        return res.redirect("../signup");
+        return res.redirect("/signup");
       }
       user.save((err) => {
         if (err) {
