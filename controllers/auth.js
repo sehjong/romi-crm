@@ -6,7 +6,7 @@ exports.getLogin = (req, res) => {
   if (req.user) {
     return res.redirect("/dashboard");
   }
-  res.render("login", {
+  res.render("auth/login", {
     title: "Login",
   });
 };
@@ -60,7 +60,7 @@ exports.getSignup = (req, res) => {
   if (req.user) {
     return res.redirect("/dashboard");
   }
-  res.render("signup", {
+  res.render("auth/signup", {
     title: "Create Account",
   });
 };
