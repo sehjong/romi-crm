@@ -11,6 +11,7 @@ const connectDB = require("./config/database");
 const mainRoutes = require("./routes/main");
 const postRoutes = require("./routes/posts");
 const clientRoutes = require("./routes/clientRoutes");
+const { ensureAuth } = require("./middleware/auth");
 
 //Use .env file in config folder
 require("dotenv").config({ path: "./config/.env" });
@@ -63,7 +64,7 @@ app.use((req, res, next) => {
 //Setup Routes For Which The Server Is Listening
 app.use("/", mainRoutes);
 app.use("/post", postRoutes);
-app.use("/clients", clientRoutes);
+app.use("/clients", ensureAuth, clientRoutes);
 
 //Server Running
 app.listen(process.env.PORT, () => {
