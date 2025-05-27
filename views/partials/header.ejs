@@ -44,4 +44,10 @@
       <div class="container alert alert-danger"><%= error[0] %></div>
      <% } %>
 
+     <% if (errors && errors.length) { %>
+      <% errors.forEach(err => { %>
+        <div class="alert alert-danger"><%=err.msg || err %></div>
+      <% }) %>
+    <% } %>
+
   <main class="container mt-4">
