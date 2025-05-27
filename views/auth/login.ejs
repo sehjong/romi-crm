@@ -1,8 +1,27 @@
-<%- include('partials/header') -%>
+<%- include('../partials/header', { title: "Log In" }) -%>
 
 <main class="container">
   <div class="row justify-content-center">
     <section class="col-6 mt-5">
+
+      <h2 class="mb-4">Log In</h2>
+      <form action="/login" method="Post">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" class="form-control" id="email" name="email" required autofocus/>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" class="form-control" id="password" name="password" required/>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Log In</button>
+        <a href="/signup" class="btn btn-link">Create an Account</a>
+      </form>
+
+      <!--
+
       <% if (locals.messages.errors) { %> <% messages.errors.forEach( el => { %>
       <div class="alert alert-danger"><%= el.msg %></div>
       <% }) %> <% } %> <% if (locals.messages.info) { %> <%
@@ -32,9 +51,12 @@
           />
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
+
+        -->
+
       </form>
     </section>
   </div>
 </main>
 
-<%- include('partials/footer') -%>
+<%- include('../partials/footer') -%>
