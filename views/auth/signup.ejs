@@ -1,7 +1,31 @@
-<%- include('partials/header') -%>
+<%- include('../partials/header', { title: "Sign Up" }) -%>
+
     <main class="container">
         <div class="row justify-content-center">
             <section class="col-6 mt-5">
+
+              <h2 class="mb-4">Create Account</h2>
+              <form action="/signup" method="POST">
+                <div class="mb-3">
+                  <label for="userName" class="form-label">Username</label>
+                  <input type="text" class="form-control" id="userName" name="userName" required autofocus/>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input type="email" class="form-conrol" id="email" name="email" required/>
+                </div>
+
+                <div class="mb-3">
+                  <label for="password" class="form-label">Password</label>
+                  <input type="password" class="form-control" id="password" name="password" required/>
+                </div>
+
+                <button type="submit" class="btn btn-success">Sign Up</button>
+                <a href="/login" class="btn btn-link">Already have an account?</a>
+
+              <!--
+
                 <% if (locals.messages.errors) { %>
                     <% messages.errors.forEach( el => { %>
                         <div class="alert alert-danger"><%= el.msg %></div>
@@ -31,9 +55,12 @@
                         <input type="password" class="form-control" id="confirmPassword" name="confirmPassword">
                       </div>
                     <button type="submit" class="btn btn-primary">Submit</button>
+
+              -->
+
                   </form>
             </section>
         </div>
     </main>
 
-<%- include('partials/footer') -%>
+<%- include('../partials/footer') -%>
