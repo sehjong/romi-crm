@@ -1,85 +1,109 @@
-<!-- Include the header partial -->
-<%- include('partials/header') -%>
+<%- include('partials/header', { title: "Dashboard" }) %>
 
-<!-- Main container -->
-<div class="container-fluid">
-  
-  <div class="row">
-
-    <!-- Sidebar (Navigation) -->
-    <div class="col-2">
-      <%- include('partials/navbar') -%>
-    </div>
-
-    <!-- Main content -->
-    <div class="col-10">
-      
-      <div class="container">
-        
-        <div class="row mt-5">
-
-          <!-- User info and post creation form -->
-          <div class="col-6">
-
-            <!-- User info -->
-            <div>
-              <p><strong>User Name</strong>: <%= user.userName %></p>
-              <p><strong>Email</strong>: <%= user.email %></p>
-              <a href="/logout" class="col-3 btn btn-primary">Logout</a>
-            </div>
-
-            <!-- Post creation form -->
-            <div class="mt-5">
-              <h2>Add a post</h2>
-              <form action="/post/createPost" enctype="multipart/form-data" method="POST">
-                <div class="mb-3">
-                  <label for="title" class="form-label">Title</label>
-                  <input type="text" class="form-control" id="title" name="title">
-                </div>
-                <div class="mb-3">
-                  <label for="caption" class="form-label">Caption</label>
-                  <textarea class="form-control" id="caption" name="caption"></textarea>
-                </div>
-                <div class="mb-3">
-                  <label for="imgUpload" class="form-label">Image</label>
-                  <input type="file" class="form-control" id="imageUpload" name="file">
-                </div>
-                <button type="submit" class="btn btn-primary" value="Upload">Submit</button>
-              </form>
-            </div>
-
-          </div>
-
-          <!-- Post list -->
-          <div class="col-6">
-
-            <ul class="row list-unstyled">
-              <% for(var i=0; i<posts.length; i++) {%>
-                <li class="col-6 justify-content-between mt-5">
-                  <a href="/post/<%= posts[i]._id%>">
-                    <h2><%= posts[i].title%></h2>
-                    <img class="img-fluid" src="<%= posts[i].image%>">
-                  </a>
-                </li>
-              <% } %>
-            </ul>
-
-            <!-- Return to Feed button -->
-            <div class="row justify-content-center mt-5">
-              <a class="btn btn-primary" href="/feed">Return to Feed</a>
-            </div>
-            
-          </div>
-
+<div class="container mt-4">
+  <!-- Summary Cards -->
+  <div class="row mb-4">
+    <!-- Total Clients -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Clients</h5>
+          <h2 class="card-text"><%= totalClients %></h2>
+          <a href="/clients" class="stretched-link"></a>
         </div>
-
       </div>
-
     </div>
-
+    <!-- Open Sales -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Open Sales</h5>
+          <h2 class="card-text"><%= openSalesCount %></h2>
+          <a href="/sales" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+    <!-- Total Sales Value -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Total Sales Value</h5>
+          <h2 class="card-text">$<%= totalSalesValue.toLocaleString() %></h2>
+          <a href="/sales" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
+    <!-- Upcoming Follow Ups -->
+    <div class="col-md-3 mb-3">
+      <div class="card text-center shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">Upcoming Follow Ups</h5>
+          <h2 class="card-text"><%= upcomingFollowUpsCount %></h2>
+          <a href="/interactions" class="stretched-link"></a>
+        </div>
+      </div>
+    </div>
   </div>
 
+  <!-- Quick Actions -->
+  <div class="mb-4">
+    <a href="/clients/new" class="btn btn-primary me-2">+ New Client</a>
+    <a href="/sales/new" class="btn btn-success me-2">+ New Sale</a>
+    <a href="/interactions/new" class="btn btn-info">+ Log Interaction</a>
+  </div>
+
+  <!-- Sales Cycle Snapshot -->
+  <div class="mb-4">
+    <h5>Sales Cycle Snapshot</h5>
+    <div class="d-flex justify-content-between">
+      <% ["Prospect", "Proposal", "Review", "Closed Won", "Closed Lost"].forEach(stage => { %>
+        <div class="card flex-fill mx-1 text-center">
+          <div class="card-body py-2">
+            <strong><%= stage %></strong>
+            <p class="mb-0"><%= salesByStage[stage] || 0 %></p>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </div>
+
+  <!-- Upcoming Interactions Table -->
+  <div class="mb-4">
+    <h5>Next 5 Interactions</h5>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Client</th>
+          <th>Type</th>
+          <th>Notes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% upcomingInteractions.forEach(i => { %>
+        <tr>
+          <td><%= i.date.toLocaleString('en-US, {month: 'short', day: 'numeric' }) %></td>
+          <td><a href="/clients/<%= i.client._id %>"><%= i.client.fullName %></a></td>
+          <td><%= i.type %></td>
+          <td><%= i.notes.substring(0, 30) %>...</td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Recent Activity -->
+  <div class="mb-5">
+    <h5>Recent Activity</h5>
+    <ul class="list-group">
+      <% recentActivity.forEach(item => { %>
+      <li class="list-group-item">
+        <%= item.message %>
+        <small class="text-muted float-end"><%= item.when %></small>
+      </li>
+      <% }) %>
+    </ul>
+  </div>
 </div>
 
-<!-- Include the footer partial -->
-<%- include('partials/footer') -%>
+<%- include('partials/footer') %>
