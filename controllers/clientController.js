@@ -14,7 +14,7 @@ module.exports = {
         } catch (err) {
             console.error('Error creating client:', err);
             req.flash('error', "Failed to create client. Please try again.");
-            res.redirect('/clients/new');
+            res.redirect('/clients/new-client');
         }
     },
     getClients: async (req, res) => {
