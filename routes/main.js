@@ -7,7 +7,11 @@ const dashboardController = require("../controllers/dashboardController");
 const { ensureAuth } = require("../middleware/auth");
 
 //Main Routes 
-router.get("/", homeController.getIndex);
+// router.get("/", homeController.getIndex);
+router.get("/", (req, res, next) => {
+    if (req.user) return res.redirect("/dashboard");
+    return homeController.getIndex(req, res, next);
+});
 // router.get("/dashboard", ensureAuth, postsController.getDashboard);
 router.get("/dashboard", ensureAuth, dashboardController.getDashboard);
 // router.get("/feed", ensureAuth, postsController.getFeed);
