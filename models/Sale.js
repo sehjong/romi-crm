@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const SaleSchema = new mongoose.Schema({
     client: {
-        type: mongoose.Schema.Types,ObjectId,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Client',
         required: true
     },
@@ -16,7 +16,7 @@ const SaleSchema = new mongoose.Schema({
     },
     stage: {
         type: String,
-        enum: ['Prospect', 'Proposal', 'Review', 'Closeed Won', 'Closed Lost'],
+        enum: ['Prospect', 'Proposal', 'Review', 'Closed Won', 'Closed Lost'],
         default: 'Prospect'
     },
 },
