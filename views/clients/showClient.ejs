@@ -1,0 +1,15 @@
+<%- include('../partials/header', { title: client.fullName }) %>
+
+<div class="container mt-4">
+    <h2><%= client.fullName %></h2>
+    <p><strong>Email:</strong> <%= client.contactEmail %></p>
+    <p><strong>Phone:</strong> <%= client.contactNumber %></p>
+    <p><strong>Address:</strong> <%= client.physicalAddress %></p>
+    <a href="/clients/<%= client._id %>/edit" class="btn btn-secondary">Edit</a>
+    <form action="/clients/<%= client._id %>?_method=DELETE" method="POST" class="d-inline">
+        <button type="submit" class="btn btn-danger">Delete</button>
+    </form>
+    <a href="/clients" class="btn btn-link">Back to All Clients</a>
+</div>
+
+<%- include('../partials/footer') %>
